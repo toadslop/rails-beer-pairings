@@ -1,9 +1,9 @@
 <h1>Beer Pairings</h1>
 
-<%= form_for url: find_path(@style), method: "get" do |f| %>
+<%= form_for :style, url: find_path(@style), method: "get" do |f| %>
 
   <div class="form-inputs">
-    <%= f.select options_for_select(@styles) %>
+    <%= f.select :style, options_for_select(@style_list) %>
   </div>
 
   <div class="form-actions">
