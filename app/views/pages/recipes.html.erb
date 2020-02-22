@@ -1,4 +1,7 @@
-<%= @results.each do |result| %>
-  <p><%= result %></p>
-  <br>
+<% @results.each do |group| %>
+  <% group.each do |recipe| %>
+    <p><%= recipe['title'] %></p>
+    <%= image_tag recipe['image'] %>
+    <br>
+  <% end %>
 <% end %>
