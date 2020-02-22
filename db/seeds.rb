@@ -1,3 +1,5 @@
+require 'open-uri'
+require 'json'
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
 #
@@ -10,6 +12,7 @@ STYLES = ['American Amber Lager', 'Bohemian-Style Pilsner', 'English-Style Brown
 Style.destroy_all
 Ingredient.destroy_all
 Pairing.destroy_all
+Recipe.destroy_all
 puts "seeding styles"
 
 STYLES.each do |style|
@@ -46,10 +49,10 @@ rmav = %w(Parsnips Carrots Beef Strip Loin,Lamb)
 game = %w(Duck Quail Quinoa Farro)
 fats = ['Butter', 'Olive Oil', 'Duck fat', 'Pork fat']
 vege = ['Carrots', 'Mild Peppers', 'Onions', 'Mushrooms']
-cheese = ['Brie', 'Gouda', 'Aged Cheddar', 'Blue', 'Mozzarella']
+cheese = ['Brie', 'Gouda', 'Aged Cheddar', 'Blue Cheese', 'Mozzarella']
 meat_choco = ['Beef Short-Rib', 'Pork Shoulder', 'Cacao']
 pork = ['Pork Sausage', 'Pork Tenderloin', 'Terrine']
-dessert = ['Cheesecake', 'Ice Cream', 'Creme Brûlée', 'Mousse Cake']
+dessert = ['Cheesecake', 'Ice Cream', 'Creme Brulee', 'Mousse Cake']
 
 make_seed(grains, "American Amber Lager", 'Bohemian-Style Pilsner')
 make_seed(beans, 'English-Style Brown Ale', 'German-Style Hefeweizen')
@@ -63,4 +66,25 @@ make_seed(meat_choco, 'German-Style Bock', 'Baltic-Style Porter')
 make_seed(pork, 'Imperial India Pale Ale)', 'Belgian-Style Dubbel')
 make_seed(dessert, 'British-Style Barley Wine', 'Belgian-Style Fruit Lambic')
 
-#url = "https://api.spoonacular.com/recipes/search?query=#{ingredient}&number=6"
+puts "seeding recipes"
+ingredients = Ingredient.all
+ingredients.each do |ingredient|
+  name = ingredient.name
+  puts "getting recipes with #{name}"
+  url = "https://api.spoonacular.com/recipes/search?query=#{name}&number=6&apiKey=6c0a90cde68b4d36b2f40ff2707996fe"
+  file = open(url).read
+  json = JSON.parse(file)
+  json['results'].each do |result|
+    recipe = Recipe.new(
+      api_id: result["id"].to_i,
+      imageUrl: result["imageUrls"][0],
+      title: result["title"],
+      ready_in: result["readyInMinutes"].to_i,
+      servings: result["servings"].to_i,
+      ingredient: ingredient
+      )
+    puts "made recipe:"
+    puts recipe
+    recipe.save!
+  end
+end
