@@ -15,7 +15,7 @@ gem 'simple_form'
 gem 'uglifier'
 gem 'webpacker'
 
-#api gemfils
+#api gemfiles
 gem 'brewery_db'
 gem 'faraday'
 
