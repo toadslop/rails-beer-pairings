@@ -1,6 +1,12 @@
 <h1>Beer Pairings</h1>
-<%= form_with(url: "/search", method: "get") do %>
-  <%= label_tag(:q, "Search for:") %>
-  <%= text_field_tag(:q) %>
-  <%= submit_tag("Search") %>
+
+<%= form_for url: find_path(@style), method: "get" do |f| %>
+
+  <div class="form-inputs">
+    <%= f.select options_for_select(@styles) %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit "Search parings" %>
+  </div>
 <% end %>
