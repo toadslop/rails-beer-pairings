@@ -8,18 +8,8 @@ class PagesController < ApplicationController
   end
 
   def recipes
-    style = Style.find_by_name(params[:style][:style])
-    pairings = Pairing.where(style: style)
-
-    #this is for the final product uses too much so can't do anything more now
-    # @results = []
-    # pairings.each do |pairing|
-    #   name = pairing.ingredient.name
-    #   url = "https://api.spoonacular.com/recipes/findByIngredients?ingredients=#{name}&number=1&apiKey=6c0a90cde68b4d36b2f40ff2707996fe"
-    #   result = open(url).read
-    #   json = JSON.parse(result)
-    #   @results << json
-    # end
+    @style = Style.find_by_name(params[:style][:style])
+    @recipes = Recipe.joins(:styles).where("styles.name = ?", @style.name)
   end
 
   private

@@ -1,7 +1,9 @@
-<% @results.each do |group| %>
-  <% group.each do |recipe| %>
-    <p><%= recipe['title'] %></p>
-    <%= image_tag recipe['image'] %>
-    <br>
-  <% end %>
+<h1>Pairing Matches</h1>
+<h3><%= link_to "back to search", root_path %></h3>
+<h3>Recipe matches for <%= @style.name  %></h3>
+<% @recipes.each do |recipe| %>
+  <p><%= recipe.title %></p>
+  <% url = "https://spoonacular.com/recipeImages/#{recipe.api_id}-240x150.jpg" %>
+  <%= image_tag url %>
+  <br>
 <% end %>

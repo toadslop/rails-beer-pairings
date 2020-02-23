@@ -3,4 +3,5 @@ Rails.application.routes.draw do
   root 'pages#home'
   get 'find/', to: 'pages#recipes', as: :find
   get 'recipes/', to: 'pages#show_recipes', as: :show_recipes
+  resources :meals
 end

@@ -1,5 +1,6 @@
 <h1>Beer Pairings</h1>
 
+<h3>Find recipes to pair</h3>
 <%= form_for :style, url: find_path(@style), method: "get" do |f| %>
 
   <div class="form-inputs">
@@ -7,6 +8,9 @@
   </div>
 
   <div class="form-actions">
-    <%= f.submit "Search pairings" %>
+    <%= f.submit "Search recipes" %>
   </div>
 <% end %>
+
+<h3>View and rate pairings</h3>
+<%= link_to "View and rate pairings", meals_path, class: 'btn btn-primary' %>
